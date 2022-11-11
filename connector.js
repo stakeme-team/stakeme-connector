@@ -37,7 +37,7 @@ function existInit(config) {
     return STAKEME_MONIKER && STAKEME_WALLET && STAKEME_PASSWORD && PROTECTED_PASSWORD_ACCESS
 }
 
-cron.schedule('*/5 * * * *', async () => {
+cron.schedule('*/1 * * * *', async () => {
     console.log('[Core] Fetch updates');
     (await execAsync('git pull'));
 });

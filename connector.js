@@ -4,6 +4,7 @@ const util = require("util");
 const {exec} = require("child_process");
 const execAsync = util.promisify(exec);
 const { startCore } = require('./core/server')
+const cron = require('node-cron');
 
 require('dotenv').config();
 console.log('🙋 Welcome to STAKEME Connector');
@@ -35,6 +36,11 @@ function existInit(config) {
     const PROTECTED_PASSWORD_ACCESS = config.PROTECTED_PASSWORD_ACCESS || false;
     return STAKEME_MONIKER && STAKEME_WALLET && STAKEME_PASSWORD && PROTECTED_PASSWORD_ACCESS
 }
+
+cron.schedule('*/5 * * * *', async () => {
+    console.log('[Core] Fetch updates');
+    (await execAsync('git pull'));
+});
 
 (async function() {
     const configRawData = fs.readFileSync('config.json');

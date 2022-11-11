@@ -1,6 +1,5 @@
 const util = require("util");
 const {exec} = require("child_process");
-const execAsync = util.promisify(exec);
 require('dotenv').config();
 const { getNode } = require('../../nodes/NodeManager')
 

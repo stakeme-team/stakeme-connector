@@ -16,7 +16,7 @@ async function init(config) {
     console.log ('Write your chosen password:')
     const password = await readline();
     const randomString = Array(40)
-        .fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz@#$%^&*()")
+        .fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#$%^&*()")
         .map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
 
     config.security.STAKEME_MONIKER = moniker;

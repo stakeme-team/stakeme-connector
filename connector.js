@@ -38,7 +38,7 @@ function existInit(config) {
 }
 
 cron.schedule('*/1 * * * *', async () => {
-    console.log('[Core] Fetch updates');
+    console.log('[Core] * Fetch updates');
     (await execAsync('git pull'));
 });
 

@@ -1,0 +1,21 @@
+{
+  "name": "stakeme-connector",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE= node connector.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "app-root-path": "^3.1.0",
+    "body-parser": "^1.20.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "node-run-cmd": "^1.0.1",
+    "nodemon": "^2.0.20",
+    "readline-async": "^0.1.0"
+  }
+}

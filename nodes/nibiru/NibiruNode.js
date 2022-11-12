@@ -47,7 +47,7 @@ class NibiruNode {
         command += `--moniker=${moniker} `;
         command += `--details=${details} `;
         if (identify !== '-') {
-            command += `--identity=${identity} `;
+            command += `--identity=${identify} `;
         }
         command += `--from=${this.wallet} `;
         command += '-y'

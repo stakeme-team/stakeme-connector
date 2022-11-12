@@ -20,7 +20,7 @@ class NibiruNode {
     }
 
     createWallet() {
-        shell.exec(`mkdir $HOME/stakeme-files`)
+        shell.exec(`mkdir -p $HOME/stakeme-files`)
         const resultCreateWallet = shell.exec(`nibid keys add ${this.wallet} &>> $HOME/stakeme-files/nibiru-wallet.txt`,
             {silent: true}).code;
         return (resultCreateWallet === 0) ?

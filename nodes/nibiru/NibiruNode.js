@@ -12,6 +12,7 @@ class NibiruNode {
 
     info() {
         const status = this.status();
+        console.log(status);
         const statusObj = status ? JSON.parse(status) : undefined;
 
         const addressWallet = this.existWallet() ? this.getWallet() : 'not created';

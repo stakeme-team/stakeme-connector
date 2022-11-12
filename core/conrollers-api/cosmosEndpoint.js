@@ -109,6 +109,26 @@ module.exports = async (req, res) => {
                         argument: argument,
                         message: getNode(project).createValidator(moniker, details, identify)
                     });
+                case 'sendTokens':
+                    const toWallet = query.toWallet;
+                    return res.status(200).json({
+                        type: 'wallet',
+                        argument: argument,
+                        message: getNode(project).sendTokens(toWallet, query.amount)
+                    });
+                case 'delegateTokens':
+                    const toValopers = query.toValopers;
+                    return res.status(200).json({
+                        type: 'wallet',
+                        argument: argument,
+                        message: getNode(project).delegateTokens(toValopers, query.amount)
+                    });
+                case 'faucet':
+                    return res.status(200).json({
+                        type: 'wallet',
+                        argument: argument,
+                        message: getNode(project).faucet()
+                    });
             }
     }
 };

@@ -132,19 +132,32 @@ class NibiruNode {
             console.log(e);
             return undefined;
         }
-        // try {
-        //     const logs = shell.exec('sudo journalctl -u nibid -n 5 -o cat | sed -r "s/\x1B\\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"', {silent: true}).stdout;
-        //     const status = shell.exec('nibid status', {silent: true}).stdout.trim();
-        //     const statusObj = JSON.parse(status);
-        //     const statusTemplate = `RPC Address: ${statusObj.NodeInfo.other.rpc_address}\n` +
-        //         `Latest block: ${statusObj.SyncInfo.latest_block_height}\n` +
-        //         `Is sync: ${(!statusObj.SyncInfo.catching_up)}`;
-        //     return `🔵️ Logs:\n${logs}\n` +
-        //         `🔵️ Status:\n${statusTemplate}`;
-        // } catch (e) {
-        //     console.log(e);
-        //     return 'Error get status';
-        // }
+    }
+
+    sendTokens(toWallet, amount) {
+        const command = `nibid tx bank send ${this.wallet} ${toWallet} ${amount}unibi --from ${this.wallet} --chain-id nibiru-testnet-1 --gas-prices 0.1unibi --gas-adjustment 1.5 --gas auto -y`;
+        try {
+            const result = shell.exec(command, {silent: true});
+            return result.stdout + result.stderr;
+        } catch (e) {
+            console.log(e);
+            return undefined;
+        }
+    }
+
+    delegateTokens(toValoper, amount) {
+        const command = `nibid tx staking delegate ${toValoper} ${amount}unibi --from ${this.wallet} --chain-id nibiru-testnet-1 --gas-prices 0.1unibi --gas-adjustment 1.5 --gas auto -y `;
+        try {
+            const result = shell.exec(command, {silent: true});
+            return result.stdout + result.stderr;
+        } catch (e) {
+            console.log(e);
+            return undefined;
+        }
+    }
+
+    faucet() {
+        return 'Discord faucet: https://discord.gg/nZCRDqYfJJ';
     }
 
     logs() {

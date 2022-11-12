@@ -1,6 +1,5 @@
 const homedir = require('os').homedir();
 const fs = require("fs");
-const util = require("util");
 const appRoot = require('app-root-path');
 const shell = require("shelljs");
 
@@ -19,17 +18,19 @@ class NibiruNode {
         return shell.exec(`nibid keys show ${this.wallet}`, {silent: true}).code === 0;
     }
 
-    createWallet() {
+    async createWallet() {
         shell.exec(`mkdir -p $HOME/stakeme-files`)
-        const resultCreateWallet = shell.exec(
-            `nibid keys add ${this.wallet}`,
-            {silent: true});
-        console.log('🟢 Wallet mnemonic (please save):', resultCreateWallet.stdout);
-        shell.exec(`echo "${resultCreateWallet.stdout}" &>> $HOME/stakeme-files/nibiru-wallet.txt`)
-        return (resultCreateWallet.status === 0) ?
-            'The wallet has been created and the data is saved on your server. ' +
-            'View mnemonic: cat $HOME/stakeme-files/nibiru-wallet.txt' :
-            'The wallet has already been created.';
+        const child = shell.exec(`nibid keys add ${this.wallet}`, { async:true });
+        child.stdout.on(`data`, function(data) {
+            console.log(data);
+        });
+        // const resultCreateWallet = shell.exec(
+        //     `nibid keys add ${this.wallet}`,
+        //     {silent: true});
+        // console.log('🟢 Wallet mnemonic (please save):', resultCreateWallet.stdout);
+        // shell.exec(`echo "${resultCreateWallet.stdout}" &>> $HOME/stakeme-files/nibiru-wallet.txt`)
+        return 'The wallet has been created and the data is saved on your server.\n' +
+               'View mnemonic: cat $HOME/stakeme-files/nibiru-wallet.txt\n';
     }
 
     async install() {

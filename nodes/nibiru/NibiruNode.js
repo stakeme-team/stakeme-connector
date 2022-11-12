@@ -1,8 +1,6 @@
 const homedir = require('os').homedir();
 const fs = require("fs");
-const { exec } = require("child_process");
 const util = require("util");
-const execAsync = util.promisify(exec);
 const appRoot = require('app-root-path');
 const shell = require("shelljs");
 
@@ -15,6 +13,19 @@ class NibiruNode {
 
     exist() {
         return fs.existsSync(homedir + "/.nibid");
+    }
+
+    existWallet() {
+        return shell.exec(`nibid keys show ${this.wallet}`, {silent: true}).code === 0;
+    }
+
+    createWallet() {
+        shell.exec(`mkdir $HOME/stakeme-files`)
+        const resultCreateWallet = shell.exec(`nibid keys add ${this.wallet} >> $HOME/stakeme-files/nibiru-wallet.txt`).code;
+        return (resultCreateWallet === 0) ?
+            'The wallet has been created and the data is saved on your server. ' +
+            'View mnemonic: cat $HOME/stakeme-files/nibiru-wallet.txt' :
+            'The wallet has already been created.';
     }
 
     async install() {
@@ -59,7 +70,7 @@ class NibiruNode {
 
     async status() {
         try {
-            const logs = (await execAsync('sudo journalctl -u nibid -n 5 -o cat | sed -r "s/\x1B\\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"')).stdout;
+            const logs = shell.exec('sudo journalctl -u nibid -n 5 -o cat | sed -r "s/\x1B\\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"', {silent: true}).stdout;
             const status = shell.exec('nibid status', {silent: true}).stdout.trim();
             const statusObj = JSON.parse(status);
             const statusTemplate = `RPC Address: ${statusObj.NodeInfo.other.rpc_address}\n` +

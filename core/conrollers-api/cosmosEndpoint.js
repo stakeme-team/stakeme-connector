@@ -84,5 +84,22 @@ module.exports = async (req, res) => {
                 type: 'exist',
                 message: await getNode(project).exist()
             });
+        case 'wallet':
+            const argument = query.argument;
+            switch (argument) {
+                case 'exist':
+                    return res.status(200).json({
+                        type: 'wallet',
+                        argument: argument,
+                        message: getNode(project).existWallet()
+                    });
+                case 'create':
+                    return res.status(200).json({
+                        type: 'wallet',
+                        argument: argument,
+                        message: getNode(project).createWallet()
+                    });
+            }
+
     }
 };

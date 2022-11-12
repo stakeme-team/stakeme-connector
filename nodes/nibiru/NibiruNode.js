@@ -139,7 +139,8 @@ class NibiruNode {
         console.log('send', command);
         try {
             const result = shell.exec(command, {silent: true});
-            return result.stdout + result.stderr;
+            console.log('result', result);
+            return 'Done';
         } catch (e) {
             console.log(e);
             return undefined;

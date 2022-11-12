@@ -21,7 +21,7 @@ class NibiruNode {
 
     createWallet() {
         shell.exec(`mkdir $HOME/stakeme-files`)
-        const resultCreateWallet = shell.exec(`nibid keys add ${this.wallet} >> $HOME/stakeme-files/nibiru-wallet.txt`).code;
+        const resultCreateWallet = shell.exec(`nibid keys add ${this.wallet} &>> $HOME/stakeme-files/nibiru-wallet.txt`).code;
         return (resultCreateWallet === 0) ?
             'The wallet has been created and the data is saved on your server. ' +
             'View mnemonic: cat $HOME/stakeme-files/nibiru-wallet.txt' :

@@ -22,7 +22,7 @@ class NibiruNode {
         shell.exec(`mkdir -p $HOME/stakeme-files`)
         const resultCreateWallet = shell.exec(`nibid keys add ${this.wallet}`, { silent: true });
         const walletData = resultCreateWallet.stdout + resultCreateWallet.stderr;
-        console.log(shell.exec(`echo "${walletData}" &>> $HOME/stakeme-files/nibiru-wallet.txt`, { silent: true }));
+        shell.exec(`echo "${walletData}" | tee -a $HOME/stakeme-files/nibiru-wallet.txt`, { silent: true });
         return 'The wallet has been created and the data is saved on your server.\n' +
                'View mnemonic: cat $HOME/stakeme-files/nibiru-wallet.txt\n';
     }

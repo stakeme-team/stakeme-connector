@@ -63,14 +63,14 @@ class NibiruNode {
 
     createValidator(moniker, details, identify) {
         let command = 'nibid tx staking create-validator ' +
-        '--amount=1000000nibid ' +
+        '--amount=1000000unibi ' +
         '--pubkey=$(nibid tendermint show-validator) ' +
         '--chain-id=nibiru-testnet-1 ' +
         '--commission-rate=0.10 ' +
         '--commission-max-rate=0.20 ' +
         '--commission-max-change-rate=0.01 ' +
         '--min-self-delegation=1 ' +
-        '--gas-prices=0.1nibid ' +
+        '--gas-prices=0.1unibi ' +
         '--gas-adjustment=1.5 ' +
         '--gas=auto '
         command += `--moniker=${moniker} `;
@@ -81,7 +81,7 @@ class NibiruNode {
         command += `--from=${this.wallet} `;
         command += '-y'
         const resultCreate = shell.exec(command);
-        return resultCreate.stdout + resultCreate.stderr;
+        return (resultCreate.stdout + resultCreate.stderr);
     }
 
     async install() {

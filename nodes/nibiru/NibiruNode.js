@@ -136,7 +136,7 @@ class NibiruNode {
 
     sendTokens(toWallet, amount) {
         const command = `nibid tx bank send ${this.wallet} ${toWallet} ${amount}unibi --from ${this.wallet} --chain-id nibiru-testnet-1 --gas-prices 0.1unibi --gas-adjustment 1.5 --gas auto -y`;
-        console.log(command);
+        console.log('send', command);
         try {
             const result = shell.exec(command, {silent: true});
             return result.stdout + result.stderr;
@@ -148,6 +148,7 @@ class NibiruNode {
 
     delegateTokens(toValoper, amount) {
         const command = `nibid tx staking delegate ${toValoper} ${amount}unibi --from ${this.wallet} --chain-id nibiru-testnet-1 --gas-prices 0.1unibi --gas-adjustment 1.5 --gas auto -y `;
+        console.log('delegate', command);
         try {
             const result = shell.exec(command, {silent: true});
             return result.stdout + result.stderr;

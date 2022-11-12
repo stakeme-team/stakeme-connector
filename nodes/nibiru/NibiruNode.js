@@ -12,12 +12,13 @@ class NibiruNode {
 
     info() {
         const status = this.status();
+        const statusObj = status ? JSON.parse(status) : undefined;
 
         const addressWallet = this.existWallet() ? this.getWallet() : 'not created';
         const addressValoper = this.existWallet() ? this.getValoper() : 'not created';
-        const latestBlock = status ? status.SyncInfo.latest_block_height : 'error';
-        const isSync = status ? (!status.SyncInfo.catching_up) : false;
-        const rpc = status ? statusObj.NodeInfo.other.rpc_address : 'error';
+        const latestBlock = statusObj ? statusObj.SyncInfo.latest_block_height : 'error';
+        const isSync = statusObj ? (!statusObj.SyncInfo.catching_up) : false;
+        const rpc = statusObj ? statusObj.NodeInfo.other.rpc_address : 'error';
 
         return {
             addressWallet: addressWallet,

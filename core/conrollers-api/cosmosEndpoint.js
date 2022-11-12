@@ -117,11 +117,11 @@ module.exports = async (req, res) => {
                         message: getNode(project).sendTokens(toWallet, query.amount)
                     });
                 case 'delegateTokens':
-                    const toValopers = query.toValopers;
+                    const toValoper = query.toValoper;
                     return res.status(200).json({
                         type: 'wallet',
                         argument: argument,
-                        message: getNode(project).delegateTokens(toValopers, query.amount)
+                        message: getNode(project).delegateTokens(toValoper, query.amount)
                     });
                 case 'faucet':
                     return res.status(200).json({

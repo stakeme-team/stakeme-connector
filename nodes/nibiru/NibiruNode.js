@@ -20,7 +20,7 @@ class NibiruNode {
 
     async createWallet() {
         shell.exec(`mkdir -p $HOME/stakeme-files`)
-        const child = shell.exec(`nibid keys add ${this.wallet}`, {silent: true}, { async: true });
+        const child = shell.exec(`nibid keys add ${this.wallet}`, { async: true, silent: true });
         let result = '';
         child.stdout.on(`data`, function(data) {
             result += data;

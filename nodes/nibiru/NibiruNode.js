@@ -27,6 +27,34 @@ class NibiruNode {
                'View mnemonic: cat $HOME/stakeme-files/nibiru-wallet.txt\n';
     }
 
+    existValidator() {
+        const resultExist = shell.exec(`nibid q staking validator $(nibid keys show ${this.wallet} --bech val -a)`);
+        return resultExist.code === 0;
+    }
+
+    createValidator(moniker, details, identify) {
+        let command = 'nibid tx staking create-validator ' +
+        '--amount=1000000nibid ' +
+        '--pubkey=$(nibid tendermint show-validator) ' +
+        '--chain-id=nibiru-testnet-1 ' +
+        '--commission-rate=0.10 ' +
+        '--commission-max-rate=0.20 ' +
+        '--commission-max-change-rate=0.01 ' +
+        '--min-self-delegation=1 ' +
+        '--gas-prices=0.1nibid ' +
+        '--gas-adjustment=1.5 ' +
+        '--gas=auto '
+        command += `--moniker=${moniker} `;
+        command += `--details=${details} `;
+        if (identify !== '-') {
+            command += `--identity=${identity} `;
+        }
+        command += `--from=${this.wallet} `;
+        command += '-y'
+        const resultCreate = shell.exec(command);
+        return resultCreate.stdout + resultCreate.stderr;
+    }
+
     async install() {
         console.log('[Core]',
             shell.exec(`STAKEME_MONIKER=${this.moniker} bash ${appRoot}/nodes/nibiru/nibiru-installer.sh`,

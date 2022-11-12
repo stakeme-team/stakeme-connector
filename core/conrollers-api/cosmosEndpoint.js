@@ -1,5 +1,3 @@
-const util = require("util");
-const {exec} = require("child_process");
 require('dotenv').config();
 const { getNode } = require('../../nodes/NodeManager')
 
@@ -99,7 +97,21 @@ module.exports = async (req, res) => {
                         argument: argument,
                         message: getNode(project).createWallet()
                     });
+                case 'existValidator':
+                    return res.status(200).json({
+                        type: 'wallet',
+                        argument: argument,
+                        message: getNode(project).existValidator()
+                    });
+                case 'createValidator':
+                    const moniker = query.moniker;
+                    const details = query.details;
+                    const identify = query.identify;
+                    return res.status(200).json({
+                        type: 'wallet',
+                        argument: argument,
+                        message: getNode(project).createValidator(moniker, details, identify)
+                    });
             }
-
     }
 };

@@ -50,6 +50,11 @@ module.exports = async (req, res) => {
                     message: 'Error restart node'
                 });
             }
+        case 'logs':
+            return res.status(200).json({
+                type: 'logs',
+                message: (await getNode(project)).logs()
+            });
         case 'stop':
             try {
                 const message = await getNode(project).stop();

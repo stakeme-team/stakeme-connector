@@ -146,6 +146,15 @@ class NibiruNode {
         //     return 'Error get status';
         // }
     }
+
+    logs() {
+        try {
+            return shell.exec('sudo journalctl -u nibid -n 5 -o cat | sed -r "s/\x1B\\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"', {silent: true}).stdout;
+        } catch (e) {
+            console.log(e);
+            return 'Error get logs';
+        }
+    }
 }
 
 module.exports = NibiruNode

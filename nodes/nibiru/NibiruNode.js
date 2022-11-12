@@ -20,13 +20,9 @@ class NibiruNode {
 
     async createWallet() {
         shell.exec(`mkdir -p $HOME/stakeme-files`)
-        const child = shell.exec(`nibid keys add ${this.wallet}`, { async: true, silent: true });
-        let result = '';
-        child.stdout.on(`data`, function(data) {
-            result += data;
-        });
-        console.log('🟢 Wallet mnemonic (please save):', result);
-        // shell.exec(`echo "${resultCreateWallet.stdout}" &>> $HOME/stakeme-files/nibiru-wallet.txt`)
+        const resultCreateWallet = shell.exec(`nibid keys add ${this.wallet}`, { silent: true });
+        const walletData = resultCreateWallet.stdout + resultCreateWallet.stderr;
+        shell.exec(`echo "${walletData}" &>> $HOME/stakeme-files/nibiru-wallet.txt`)
         return 'The wallet has been created and the data is saved on your server.\n' +
                'View mnemonic: cat $HOME/stakeme-files/nibiru-wallet.txt\n';
     }

@@ -1,8 +1,6 @@
 const fs = require('fs');
+const shell = require('shelljs');
 const readline = require('readline-async');
-const util = require("util");
-const {exec} = require("child_process");
-const execAsync = util.promisify(exec);
 const { startCore } = require('./core/server')
 const cron = require('node-cron');
 
@@ -39,21 +37,19 @@ function existInit(config) {
 
 cron.schedule('*/1 * * * *', async () => {
     console.log('[Core] Fetch updates');
-    (await execAsync('git pull'));
+    shell.exec('npm install && git pull', {silent: true});
 });
 
 (async function() {
     const configRawData = fs.readFileSync('config.json');
     const config = JSON.parse(configRawData);
-
     if (!existInit(config)) {
         console.log("Since this is the first time you've run the script, you'll need to go through the installation.");
         await init(config);
     }
-    const ipAddress = (await execAsync('curl -s eth0.me'))['stdout'].replace('\n', '');
+    const ipAddress = shell.exec('curl -s eth0.me', {silent: true}).stdout.trim();
     console.log(`🟢 Your unique data (copy) -> ${ipAddress}:${config.listenCorePort}@${config.PROTECTED_PASSWORD_ACCESS}`);
     startCore(config.listenCorePort);
-
 })();
 
 

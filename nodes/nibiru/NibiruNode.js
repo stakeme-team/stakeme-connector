@@ -10,12 +10,38 @@ class NibiruNode {
         this.password = password;
     }
 
+    info() {
+        const status = this.status();
+
+        const addressWallet = this.existWallet() ? this.getWallet() : 'not created';
+        const addressValoper = this.existWallet() ? this.getValoper() : 'not created';
+        const latestBlock = status ? status.SyncInfo.latest_block_height : 'error';
+        const isSync = status ? (!status.SyncInfo.catching_up) : false;
+        const rpc = status ? statusObj.NodeInfo.other.rpc_address : 'error';
+
+        return {
+            addressWallet: addressWallet,
+            addressValoper: addressValoper,
+            latestBlock: latestBlock,
+            isSync: isSync,
+            rpc: rpc
+        }
+    }
+
     exist() {
         return fs.existsSync(homedir + "/.nibid");
     }
 
     existWallet() {
         return shell.exec(`nibid keys show ${this.wallet}`, {silent: true}).code === 0;
+    }
+
+    getWallet() {
+        return shell.exec(`nibid keys show ${this.wallet} -a`, {silent: true}).stdout;
+    }
+
+    getValoper() {
+        return shell.exec(`nibid keys show ${this.wallet} --bech val -a`, {silent: true}).stdout;
     }
 
     createWallet() {
@@ -97,19 +123,25 @@ class NibiruNode {
 
     async status() {
         try {
-            const logs = shell.exec('sudo journalctl -u nibid -n 5 -o cat | sed -r "s/\x1B\\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"', {silent: true}).stdout;
             const status = shell.exec('nibid status', {silent: true}).stdout.trim();
-            const statusObj = JSON.parse(status);
-            const statusTemplate = `RPC Address: ${statusObj.NodeInfo.other.rpc_address}\n` +
-                `Latest block: ${statusObj.SyncInfo.latest_block_height}\n` +
-                `Is sync: ${(!statusObj.SyncInfo.catching_up)}`;
-            return `🔵️ Logs:\n${logs}\n` +
-                `🔵️ Status:\n${statusTemplate}`;
+            return JSON.parse(status);
         } catch (e) {
             console.log(e);
-            return 'Error get status';
+            return undefined;
         }
-
+        // try {
+        //     const logs = shell.exec('sudo journalctl -u nibid -n 5 -o cat | sed -r "s/\x1B\\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"', {silent: true}).stdout;
+        //     const status = shell.exec('nibid status', {silent: true}).stdout.trim();
+        //     const statusObj = JSON.parse(status);
+        //     const statusTemplate = `RPC Address: ${statusObj.NodeInfo.other.rpc_address}\n` +
+        //         `Latest block: ${statusObj.SyncInfo.latest_block_height}\n` +
+        //         `Is sync: ${(!statusObj.SyncInfo.catching_up)}`;
+        //     return `🔵️ Logs:\n${logs}\n` +
+        //         `🔵️ Status:\n${statusTemplate}`;
+        // } catch (e) {
+        //     console.log(e);
+        //     return 'Error get status';
+        // }
     }
 }
 

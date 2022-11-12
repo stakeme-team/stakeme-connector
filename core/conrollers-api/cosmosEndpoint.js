@@ -18,6 +18,12 @@ module.exports = async (req, res) => {
     const project = query.project;
 
     switch (type) {
+        case 'info':
+            const message = JSON.stringify(getNode(project).info());
+            return res.status(200).json({
+                type: 'info',
+                message: message
+            });
         case 'install':
             try {
                 const message = await getNode(project).install();
@@ -55,20 +61,6 @@ module.exports = async (req, res) => {
                 return res.status(400).json({
                     type: 'stop',
                     message: 'Error stop node'
-                });
-            }
-        case 'status':
-            try {
-                const message = await getNode(project).status();
-                return res.status(200).json({
-                    type: 'status',
-                    message: message
-                });
-            } catch (e) {
-                console.log(e);
-                return res.status(400).json({
-                    type: 'status',
-                    message: 'Error get status node'
                 });
             }
         case 'delete':

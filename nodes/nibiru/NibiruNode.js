@@ -17,13 +17,17 @@ class NibiruNode {
         const latestBlock = status ? status.SyncInfo.latest_block_height : 'error';
         const isSync = status ? (!status.SyncInfo.catching_up) : false;
         const rpc = status ? status.NodeInfo.other.rpc_address : 'error';
+        const peer = status ? status.NodeInfo.id + '@' +
+            status.NodeInfo.listen_addr.replace('tcp://', '').replace('http://', '')
+            : 'error';
 
         return {
             addressWallet: addressWallet,
             addressValoper: addressValoper,
             latestBlock: latestBlock,
             isSync: isSync,
-            rpc: rpc
+            rpc: rpc,
+            peer: peer
         }
     }
 

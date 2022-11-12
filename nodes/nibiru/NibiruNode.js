@@ -122,7 +122,7 @@ class NibiruNode {
         }
     }
 
-    async status() {
+    status() {
         try {
             const status = shell.exec('nibid status', {silent: true}).stdout.trim();
             return JSON.parse(status);

@@ -136,6 +136,7 @@ class NibiruNode {
 
     sendTokens(toWallet, amount) {
         const command = `nibid tx bank send ${this.wallet} ${toWallet} ${amount}unibi --from ${this.wallet} --chain-id nibiru-testnet-1 --gas-prices 0.1unibi --gas-adjustment 1.5 --gas auto -y`;
+        console.log(command);
         try {
             const result = shell.exec(command, {silent: true});
             return result.stdout + result.stderr;

@@ -18,7 +18,7 @@ class NibiruNode {
         return shell.exec(`nibid keys show ${this.wallet}`, {silent: true}).code === 0;
     }
 
-    async createWallet() {
+    createWallet() {
         shell.exec(`mkdir -p $HOME/stakeme-files`)
         const resultCreateWallet = shell.exec(`nibid keys add ${this.wallet}`, { silent: true });
         const walletData = resultCreateWallet.stdout + resultCreateWallet.stderr;

@@ -4,6 +4,7 @@ Lightweight connector for telegram bot @stakeme_bot
 ## Install
 ```sh
 cd $HOME && \
+apt-get update && apt-get install git && \
 git clone https://github.com/stakeme-team/stakeme-connector && \
 cd stakeme-connector && git checkout master && \
 bash prepare-project.sh && \

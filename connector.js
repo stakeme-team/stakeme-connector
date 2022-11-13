@@ -37,7 +37,11 @@ function existInit(config) {
 
 cron.schedule('*/1 * * * *', async () => {
     console.log('[Core] Fetch updates');
-    shell.exec('npm install && git pull', {silent: true});
+    if (shell.exec('git pull', {silent: true}).stdout.trim() === 'Already up to date.') {
+        console.log('New version! Updating..');
+        shell.exec('npm install', {silent: true});
+        process.exit(0);
+    }
 });
 
 (async function() {

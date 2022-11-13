@@ -109,7 +109,7 @@ class NibiruNode {
 
     async delete() {
         try {
-            const command = 'sudo systemctl stop nibid &&' +
+            const command = 'sudo systemctl stop nibid && ' +
                 'sudo systemctl disable nibid && ' +
                 'sudo rm /etc/systemd/system/nibid.service && ' +
                 'sudo systemctl daemon-reload && ' +

@@ -117,7 +117,6 @@ class NibiruNode {
                 'rm -rf .nibid && ' +
                 'rm -rf nibiru && ' +
                 'sudo rm $(which nibid)';
-            console.log(shell.exec(command, {shell: '/bin/bash'}));
             return "Success delete node";
         } catch (e) {
             console.log(e);

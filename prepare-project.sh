@@ -1,6 +1,6 @@
 #!/bin/bash
 apt-get update
-apt-get install screen git
+apt-get install screen
 if [ ! -f "/root/.nvm/versions/node/v16.18.0/bin/node" ]; then
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
   touch $HOME/.bash_profile

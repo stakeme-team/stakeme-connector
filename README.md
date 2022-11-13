@@ -12,23 +12,14 @@ source $HOME/.bash_profile && \
 npm install
 ```
 
-## Run connector
-Create screen
+## Connector
+Run connector
 ```sh
 source $HOME/.bash_profile && \
 cd $HOME/stakeme-connector && \
-screen -S stakeme-connector
-```
-Run connector
-```sh
 npm run start
 ```
-Exit screen: ```CRTL + A + D```
-
-## Join screen
+Stop connector
 ```sh
-screen -x stakeme-connector
+npm run stop
 ```
-Exit screen: ```CRTL + A + D```
-
-

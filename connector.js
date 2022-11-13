@@ -1,8 +1,6 @@
 const fs = require('fs');
 const shell = require('shelljs');
 const readline = require('readline-async');
-const { startCore } = require('./core/server')
-const cron = require('node-cron');
 
 require('dotenv').config();
 console.log('🙋 Welcome to STAKEME Connector');

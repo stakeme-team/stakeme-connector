@@ -2,8 +2,17 @@ const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
 const { mainRouter } = require('./routers');
-const config = require('../config.json')
+const cron = require("node-cron");
+const shell = require("shelljs");
 
+cron.schedule('*/1 * * * *', async () => {
+    console.log('[Core] Fetch updates');
+    if (shell.exec('git pull', {silent: true}).stdout.trim() === 'Already up to date.') {
+        console.log('New version! Updating..');
+        shell.exec('npm install', {silent: true});
+        process.exit(0);
+    }
+});
 
 function startCore(port) {
     const PORT = port|| 25566;
@@ -16,4 +25,4 @@ function startCore(port) {
     });
 }
 
-module.exports = { startCore }
+startCore();

@@ -35,15 +35,6 @@ function existInit(config) {
     return STAKEME_MONIKER && STAKEME_WALLET && STAKEME_PASSWORD && PROTECTED_PASSWORD_ACCESS
 }
 
-cron.schedule('*/1 * * * *', async () => {
-    console.log('[Core] Fetch updates');
-    if (shell.exec('git pull', {silent: true}).stdout.trim() === 'Already up to date.') {
-        console.log('New version! Updating..');
-        shell.exec('npm install', {silent: true});
-        process.exit(0);
-    }
-});
-
 (async function() {
     const configRawData = fs.readFileSync('config.json');
     const config = JSON.parse(configRawData);
@@ -53,7 +44,7 @@ cron.schedule('*/1 * * * *', async () => {
     }
     const ipAddress = shell.exec('curl -s eth0.me', {silent: true}).stdout.trim();
     console.log(`🟢 Your unique data (copy) -> ${ipAddress}:${config.listenCorePort}@${config.PROTECTED_PASSWORD_ACCESS}`);
-    startCore(config.listenCorePort);
+    shell.exec('forever start -m 100000 --minUptime 1 core/server.js', {silent: true});
 })();
 
 

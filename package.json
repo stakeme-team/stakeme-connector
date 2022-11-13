@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE= forever --spinSleepTime=10000 -c \"node\" connector.js"
+    "start": "node connector.js"
   },
   "keywords": [],
   "author": "",

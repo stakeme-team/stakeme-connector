@@ -114,9 +114,10 @@ class NibiruNode {
                 'sudo rm /etc/systemd/system/nibid.service && ' +
                 'sudo systemctl daemon-reload && ' +
                 'cd $HOME && ' +
-                'rm -rf .nibid nibiru && ' +
+                'rm -rf .nibid && ' +
+                'rm -rf nibiru && ' +
                 'sudo rm $(which nibid)';
-            shell.exec(command, {silent: true, shell: '/bin/bash'}).stdout.trim();
+            shell.exec(command, {shell: '/bin/bash'});
             return "Success delete node";
         } catch (e) {
             console.log(e);

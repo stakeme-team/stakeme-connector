@@ -42,7 +42,7 @@ function existInit(config) {
     }
     const ipAddress = shell.exec('curl -s eth0.me', {silent: true}).stdout.trim();
     console.log(`🟢 Your unique data (copy) -> ${ipAddress}:${config.listenCorePort}@${config.PROTECTED_PASSWORD_ACCESS}`);
-    shell.exec('forever start -m 100000 --minUptime 1 core/server.js', {silent: true});
+    shell.exec('NODE= forever start -m 100000 --minUptime 1 core/server.js', {silent: true});
 })();
 
 

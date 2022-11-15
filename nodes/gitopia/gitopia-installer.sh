@@ -15,6 +15,7 @@ sudo apt install -y make gcc jq curl git lz4 build-essential chrony unzip
 source <(curl -s https://gist.githubusercontent.com/stakemepro/de050a1108dc2c1b86a0f6fd8c0a7442/raw/942032db9f18235d2b87ebe4ac5d28dda4632a37/go-install.sh)
 
 printLog "Install binary"
+cd $HOME && curl https://get.gitopia.com | bash
 cd || return
 rm -rf gitopia && git clone -b v1.2.0 gitopia://gitopia/gitopia
 cd $HOME/gitopia && make install

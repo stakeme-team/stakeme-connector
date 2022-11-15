@@ -33,7 +33,7 @@ mv genesis.json $HOME/.gitopia/config/genesis.json
 
 wget -O $HOME/.gitopia/config/addrbook.json "http://65.108.6.45:8000/gitopia/addrbook.json"
 sed -i -e "s/^minimum-gas-prices *=.*/minimum-gas-prices = \"0utlore\"/" $HOME/.gitopia/config/app.toml
-seeds="bb6f0d3c55a6834037d545159869388bc498a5c7@gitopia.stakeme.pro:27656"
+seeds=""
 peers="bb6f0d3c55a6834037d545159869388bc498a5c7@gitopia.stakeme.pro:27656"
 sed -i -e 's|^seeds *=.*|seeds = "'$seeds'"|; s|^persistent_peers *=.*|persistent_peers = "'$peers'"|' $HOME/.gitopia/config/config.toml
 

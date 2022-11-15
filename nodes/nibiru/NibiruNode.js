@@ -128,6 +128,7 @@ class NibiruNode {
     status() {
         try {
             const status = shell.exec('source $HOME/.bash_profile && nibid status', {silent: true, shell: '/bin/bash'}).stdout.trim();
+            console.log(status);
             return JSON.parse(status);
         } catch (e) {
             console.log(e);

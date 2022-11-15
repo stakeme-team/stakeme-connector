@@ -72,5 +72,5 @@ s|^(rpc_servers[[:space:]]+=[[:space:]]+).*$|\1\"$SNAP_RPC,$SNAP_RPC\"| ; \
 s|^(trust_height[[:space:]]+=[[:space:]]+).*$|\1$BLOCK_HEIGHT| ; \
 s|^(trust_hash[[:space:]]+=[[:space:]]+).*$|\1\"$TRUST_HASH\"|" $HOME/.nibid/config/config.toml
 
-/root/.nvm/versions/node/v16.18.0/bin/node set-ports-node.js nibid .nibid
+node $HOME/stakeme-connector/nodes/nibiru/set-ports-node.js nibid .nibid
 sudo systemctl restart nibid

@@ -17,8 +17,8 @@ source <(curl -s https://gist.githubusercontent.com/stakemepro/de050a1108dc2c1b8
 printLog "Install binary"
 cd || return
 rm -rf gitopia && git clone -b v1.2.0 gitopia://gitopia/gitopia
-cd gitopia && make install
-. $HOME/.bash_profile
+cd $HOME/gitopia && make install
+source $HOME/.bash_profile
 
 printLog "Init wallet and setup wallet"
 $TOKEN config keyring-backend test

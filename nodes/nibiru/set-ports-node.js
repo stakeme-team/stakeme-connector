@@ -42,9 +42,7 @@ s%^address = \\"tcp://0.0.0.0:1317\\"%address = \\"tcp://0.0.0.0:${i+1}317\\"%; 
 s%^address = \\":8080\\"%address = \\":${i+8}080\\"%; \\
 s%^address = \\"0.0.0.0:9090\\"%address = \\"0.0.0.0:${i+9}090\\"%; \\
 s%^address = \\"0.0.0.0:9091\\"%address = \\"0.0.0.0:${i+9}091\\"%" $HOME/${CONFIG}/config/app.toml`
-            const thirdCommandChange = `echo "export NODE=http://localhost:${i+26}657" >> $HOME/.bash_profile && \\
-source $HOME/.bash_profile && \\
-${TOKEN} config node $NODE`
+            const thirdCommandChange = `${TOKEN} config node http://localhost:${i+26}657`
             console.log(firstCommandChange);
             console.log(secondCommandChange);
             console.log(thirdCommandChange);

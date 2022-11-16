@@ -28,7 +28,7 @@ $TOKEN init $STAKEME_MONIKER --chain-id $CHAIN_ID
 $TOKEN config chain-id $CHAIN_ID
 
 printLog "Download genesis and setup config"
-wget -O $HOME/.gitopia/config/addrbook.json "http://65.108.6.45:8000/gitopia/addrbook.json"
+wget -O $HOME/.gitopia/config/addrbook.json "https://gist.githubusercontent.com/stakemepro/b7ed040eeaed546219a1ce4061a479ce/raw/d9615100dd623d5a973de62f0e2476856bd2e6bf/addrbook.json"
 wget -q https://server.gitopia.com/raw/gitopia/testnets/master/gitopia-janus-testnet-2/genesis.json.gz
 gunzip genesis.json.gz
 mv genesis.json $HOME/.gitopia/config/genesis.json

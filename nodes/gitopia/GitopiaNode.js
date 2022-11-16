@@ -128,7 +128,7 @@ class GitopiaNode {
     status() {
         try {
             const status = shell.exec('source $HOME/.bash_profile && gitopiad status', {silent: true, shell: '/bin/bash'});
-            return JSON.parse(status.stdout.trim() + status.stderr().trim());
+            return JSON.parse(status.stdout.trim() + status.stderr.trim());
         } catch (e) {
             console.log(e);
             return undefined;

@@ -88,7 +88,7 @@ class GitopiaNode {
         console.log('[Core]',
             shell.exec(`source $HOME/.bash_profile && STAKEME_MONIKER=${this.moniker} bash ${appRoot}/nodes/gitopia/gitopia-installer.sh`,
                 {silent: true, shell: '/bin/bash'}
-            ).stdout
+            )
         );
         return "Node has been installed.";
     }

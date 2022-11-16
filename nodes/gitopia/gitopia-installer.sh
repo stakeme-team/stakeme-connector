@@ -39,30 +39,34 @@ sed -i -e "s/^seeds *=.*/seeds = \"$seeds\"/; s/^persistent_peers *=.*/persisten
 printLog "Create service file"
 sudo tee /etc/systemd/system/gitopiad.service > /dev/null <<EOF
 [Unit]
-Description=gitopia
+Description=gitopiad
 After=network-online.target
 
 [Service]
 User=$USER
-ExecStart=$(which gitopiad) start --home $HOME/.gitopia
+ExecStart=$(which gitopiad) start
 Restart=on-failure
-RestartSec=10
+RestartSec=3
 LimitNOFILE=65535
 
 [Install]
 WantedBy=multi-user.target
 EOF
 gitopiad tendermint unsafe-reset-all --home $HOME/.gitopiad --keep-addr-book
+node $HOME/stakeme-connector/nodes/gitopia/set-ports-node.js gitopiad .gitopia
 
-SNAP_RPC="http://gitopia.stakeme.pro:27657"
+SNAP_RPC=http://gitopia.stakeme.pro:27657
+
 LATEST_HEIGHT=$(curl -s $SNAP_RPC/block | jq -r .result.block.header.height); \
 BLOCK_HEIGHT=$((LATEST_HEIGHT - 1000)); \
 TRUST_HASH=$(curl -s "$SNAP_RPC/block?height=$BLOCK_HEIGHT" | jq -r .result.block_id.hash)
+
 echo $LATEST_HEIGHT $BLOCK_HEIGHT $TRUST_HASH
-sed -i -E "s|^(enable[[:space:]]+=[[:space:]]+).*$|\1true| ; \
+
+sed -i.bak -E "s|^(enable[[:space:]]+=[[:space:]]+).*$|\1true| ; \
 s|^(rpc_servers[[:space:]]+=[[:space:]]+).*$|\1\"$SNAP_RPC,$SNAP_RPC\"| ; \
 s|^(trust_height[[:space:]]+=[[:space:]]+).*$|\1$BLOCK_HEIGHT| ; \
-s|^(trust_hash[[:space:]]+=[[:space:]]+).*$|\1\"$TRUST_HASH\"|" $HOME/.gitopiad/config/config.toml
+s|^(trust_hash[[:space:]]+=[[:space:]]+).*$|\1\"$TRUST_HASH\"| ; \
+s|^(seeds[[:space:]]+=[[:space:]]+).*$|\1\"\"|" $HOME/.gitopia/config/config.toml
 
-node $HOME/stakeme-connector/nodes/gitopia/set-ports-node.js gitopiad .gitopia
 sudo systemctl restart gitopiad

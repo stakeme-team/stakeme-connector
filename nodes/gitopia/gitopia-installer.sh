@@ -15,10 +15,10 @@ sudo apt install -y make gcc jq curl git lz4 build-essential chrony unzip
 source <(curl -s https://gist.githubusercontent.com/stakemepro/de050a1108dc2c1b86a0f6fd8c0a7442/raw/942032db9f18235d2b87ebe4ac5d28dda4632a37/go-install.sh)
 
 printLog "Install binary"
-cd $HOME && curl https://get.gitopia.com | bash
+cd $HOME && curl https://get.gitopia.com | bash > /dev/null
 cd || return
 rm -rf gitopia && git clone -b v1.2.0 gitopia://gitopia/gitopia
-cd $HOME/gitopia && make install
+cd $HOME/gitopia && make install > /dev/null
 source $HOME/.bash_profile
 
 printLog "Init wallet and setup wallet"
@@ -29,7 +29,7 @@ $TOKEN config chain-id $CHAIN_ID
 
 printLog "Download genesis and setup config"
 wget -O $HOME/.gitopia/config/addrbook.json "http://65.108.6.45:8000/gitopia/addrbook.json"
-wget https://server.gitopia.com/raw/gitopia/testnets/master/gitopia-janus-testnet-2/genesis.json.gz
+wget -q https://server.gitopia.com/raw/gitopia/testnets/master/gitopia-janus-testnet-2/genesis.json.gz
 gunzip genesis.json.gz
 mv genesis.json $HOME/.gitopia/config/genesis.json
 peers="bb6f0d3c55a6834037d545159869388bc498a5c7@gitopia.stakeme.pro:27656"

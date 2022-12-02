@@ -6,6 +6,6 @@
     "STAKEME_WALLET": "",
     "STAKEME_PASSWORD": ""
   },
-  "PROTECTED_PASSWORD_ACCESS": "12345",
+  "PROTECTED_PASSWORD_ACCESS": "",
   "telegramUserId": ""
 }

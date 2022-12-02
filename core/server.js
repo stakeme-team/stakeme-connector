@@ -35,6 +35,7 @@ function startCore(port) {
     const PORT = port|| 25566;
     const app = express();
     app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
     app.use(`/`, mainRouter);
     const server = http.createServer(app);
     server.listen(PORT, () => {

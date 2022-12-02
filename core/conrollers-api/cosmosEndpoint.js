@@ -2,6 +2,7 @@ require('dotenv').config();
 const { getNode } = require('../../nodes/NodeManager')
 
 const config = require('../../config.json')
+const fs = require("fs");
 
 module.exports = async (req, res) => {
     const headers = req.headers;
@@ -13,7 +14,7 @@ module.exports = async (req, res) => {
         });
     }
 
-    const query = req.query;
+    const query = req.body;
     const type = query.type;
     const project = query.project;
 
@@ -130,5 +131,15 @@ module.exports = async (req, res) => {
                         message: getNode(project).faucet()
                     });
             }
+        break;
+        case 'setUser':
+            const telegramUserId = query.telegramUserId
+            config['telegramUserId'] = telegramUserId;
+            const data = JSON.stringify(config, null, 2);
+            fs.writeFileSync('config.json', data);
+            return res.status(200).json({
+                type: 'setUser',
+                message: 'success'
+            });
     }
 };

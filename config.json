@@ -1,10 +1,11 @@
 {
-	"autoUpdate": false,
-	"listenCorePort": 25566,
-	"security": {
-		"STAKEME_MONIKER": "",
-		"STAKEME_WALLET": "",
-		"STAKEME_PASSWORD": ""
-	},
-	"PROTECTED_PASSWORD_ACCESS": ""
+  "autoUpdate": false,
+  "listenCorePort": 25566,
+  "security": {
+    "STAKEME_MONIKER": "",
+    "STAKEME_WALLET": "",
+    "STAKEME_PASSWORD": ""
+  },
+  "PROTECTED_PASSWORD_ACCESS": "12345",
+  "telegramUserId": ""
 }

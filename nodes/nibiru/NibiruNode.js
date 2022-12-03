@@ -27,7 +27,8 @@ class NibiruNode {
             latestBlock: latestBlock,
             isSync: isSync,
             rpc: rpc,
-            peer: peer
+            peer: peer,
+            status: status ? 0 : 1
         }
     }
 

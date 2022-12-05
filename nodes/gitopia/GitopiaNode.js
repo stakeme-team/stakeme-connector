@@ -86,7 +86,7 @@ class GitopiaNode {
 
     async install() {
         console.log('[Core]',
-            shell.exec(`source $HOME/.bash_profile && STAKEME_MONIKER=${this.moniker} bash ${appRoot}/nodes/gitopia/gitopia-installer.sh`,
+            shell.exec(`source $HOME/.bash_profile && STAKEME_MONIKER=${this.moniker} bash ${appRoot}/scripts/gitopia-installer.sh`,
                 {silent: true, shell: '/bin/bash'}
             )
         );

@@ -12,7 +12,7 @@ const configRawData = fs.readFileSync('config.json');
 cron.schedule('*/1 * * * *', async () => {
     console.log('[Core] Fetch updates');
     if (shell.exec('git pull', {silent: true}).stdout.trim() !== 'Already up to date.') {
-        console.log('New version! Updating..');
+        console.log('New version! Updating...');
         const nameFilesInLastCommit = shell.exec(
             'git diff-tree --no-commit-id --name-only -r $(git rev-parse HEAD)',
             {silent: true}

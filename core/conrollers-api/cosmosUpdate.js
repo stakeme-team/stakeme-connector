@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
     const project = query.project;
     const script = query.script;
 
-    const result = await shell.exec(`source $HOME/.bash_profile && bash stakeme-connector/scripts/${script}`, {shell: '/bin/bash', silent: true});
+    const result = await shell.exec(`source $HOME/.bash_profile && bash $HOME/stakeme-connector/scripts/${script}`, {shell: '/bin/bash', silent: true});
     console.log(result.stdout + result.stderr);
     return res.status(200).json({
         message: `Code execute: ${result.code}`,

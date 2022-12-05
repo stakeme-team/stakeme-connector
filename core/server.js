@@ -17,9 +17,11 @@ cron.schedule('*/1 * * * *', async () => {
             'git diff-tree --no-commit-id --name-only -r $(git rev-parse HEAD)',
             {silent: true}
         ).stdout.trim().split('\n');
+        console.log(nameFilesInLastCommit);
         const filterNameFilesWithoutScript = nameFilesInLastCommit.filter(x => {
             return !x.startsWith('scripts/');
-        })
+        });
+        console.log(filterNameFilesWithoutScript);
         if (filterNameFilesWithoutScript.length === 0) {
             console.log('Found only scripts. Without reload connector.');
             return;

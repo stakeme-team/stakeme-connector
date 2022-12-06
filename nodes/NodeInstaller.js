@@ -30,16 +30,22 @@ function NodeInstaller() {
         });
     }
     function getLogs() {
-        return logs.join('');
+        let template = logs.join('');
+        if (template > 4096) template = template.slice(template.length - 4096)
+        return template;
     }
     function getStatus() {
         return status;
+    }
+    function setStatus(toStatus) {
+        status = toStatus;
     }
 
     return {
         getLogs,
         run,
-        getStatus
+        getStatus,
+        setStatus
     }
 }
 

@@ -2,12 +2,14 @@ const homedir = require('os').homedir();
 const fs = require("fs");
 const appRoot = require('app-root-path');
 const shell = require("shelljs");
+const NodeInstaller = require("../NodeInstaller");
 
 class GitopiaNode {
     constructor(moniker, wallet, password) {
         this.moniker = moniker;
         this.wallet = wallet;
         this.password = password;
+        this.nodeInstaller = new NodeInstaller();
     }
 
     info() {
@@ -85,12 +87,8 @@ class GitopiaNode {
     }
 
     async install() {
-        console.log('[Core]',
-            shell.exec(`source $HOME/.bash_profile && STAKEME_MONIKER=${this.moniker} bash ${appRoot}/scripts/gitopia-installer.sh`,
-                {silent: true, shell: '/bin/bash'}
-            )
-        );
-        return "Node has been installed.";
+        this.nodeInstaller.run('source $HOME/.bash_profile && STAKEME_MONIKER=${this.moniker} bash ${appRoot}/scripts/gitopia-installer.sh');
+        return "Install service go..";
     }
 
     async restart() {
@@ -118,6 +116,7 @@ class GitopiaNode {
                 'rm -rf gitopia && ' +
                 'sudo rm $(which gitopiad)';
             shell.exec(command, {shell: '/bin/bash'});
+            this.nodeInstaller.setStatus('not installing');
             return "Success delete node";
         } catch (e) {
             console.log(e);

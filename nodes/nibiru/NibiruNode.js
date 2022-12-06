@@ -125,6 +125,7 @@ class NibiruNode {
                 'rm -rf nibiru && ' +
                 'sudo rm $(which nibid)';
             shell.exec(command, {shell: '/bin/bash'});
+            this.nodeInstaller.setStatus('not installing');
             return "Success delete node";
         } catch (e) {
             console.log(e);

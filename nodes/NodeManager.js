@@ -11,7 +11,7 @@ function NodeManager() {
         config.security.STAKEME_MONIKER,
         config.security.STAKEME_WALLET,
         config.security.STAKEME_PASSWORD,
-        'nidid'
+        'nibid'
     );
     const gitopiaNode = new GitopiaNode(
         config.security.STAKEME_MONIKER,

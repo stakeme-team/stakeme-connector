@@ -27,7 +27,7 @@ module.exports = (NodeManager) => {
                 });
             case 'install':
                 try {
-                    const message = await NodeManager.getNode(project).install();
+                    const message = NodeManager.getNode(project).install();
                     return res.status(200).json({
                         type: 'install',
                         message: message
@@ -40,7 +40,7 @@ module.exports = (NodeManager) => {
                 }
             case 'restart':
                 try {
-                    const message = await NodeManager.getNode(project).restart();
+                    const message = NodeManager.getNode(project).restart();
                     return res.status(200).json({
                         type: 'restart',
                         message: message
@@ -54,11 +54,11 @@ module.exports = (NodeManager) => {
             case 'logs':
                 return res.status(200).json({
                     type: 'logs',
-                    message: (await NodeManager.getNode(project)).logs()
+                    message: NodeManager.getNode(project).logs()
                 });
             case 'stop':
                 try {
-                    const message = await NodeManager.getNode(project).stop();
+                    const message = NodeManager.getNode(project).stop();
                     return res.status(200).json({
                         type: 'stop',
                         message: message
@@ -78,7 +78,7 @@ module.exports = (NodeManager) => {
             case 'exist':
                 return res.status(200).json({
                     type: 'exist',
-                    message: await NodeManager.getNode(project).exist()
+                    message: NodeManager.getNode(project).exist()
                 });
             case 'wallet':
                 const argument = query.argument;

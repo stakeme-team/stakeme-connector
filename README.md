@@ -9,6 +9,7 @@ git clone https://github.com/stakeme-team/stakeme-connector && \
 cd stakeme-connector && git checkout master && \
 bash prepare-project.sh && \
 source $HOME/.bash_profile && \
+mv config.test.json config.json && \
 npm install
 ```
 

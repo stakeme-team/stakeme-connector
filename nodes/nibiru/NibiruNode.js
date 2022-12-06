@@ -114,7 +114,7 @@ class NibiruNode {
         return "Node has been stopped";
     }
 
-    async delete() {
+    delete() {
         try {
             const command = 'source $HOME/.bash_profile && sudo systemctl stop nibid && ' +
                 'sudo systemctl disable nibid && ' +

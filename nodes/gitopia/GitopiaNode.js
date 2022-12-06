@@ -105,7 +105,7 @@ class GitopiaNode {
         return "Node has been stopped";
     }
 
-    async delete() {
+    delete() {
         try {
             const command = 'source $HOME/.bash_profile && sudo systemctl stop gitopiad && ' +
                 'sudo systemctl disable gitopiad && ' +

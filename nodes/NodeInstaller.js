@@ -27,7 +27,6 @@ function NodeInstaller() {
 
         child.on('close', (code) => {
             status = 'end';
-            console.log('okay');
             logs = [];
         });
     }
@@ -40,7 +39,6 @@ function NodeInstaller() {
         return status;
     }
     function setStatus(toStatus) {
-        console.log('set', toStatus);
         status = toStatus;
     }
 

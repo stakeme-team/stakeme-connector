@@ -5,7 +5,7 @@ function NodeInstaller() {
     let status = 'not installing';
     function run(command) {
         status = 'processing';
-        child = exec(command, {async:true});
+        child = exec(command, {async : true, shell: '/bin/bash'});
         child.stdout.on('data', function(data) {
             if (logs.length === 6) {
                 logs = logs.splice(3, data.length);

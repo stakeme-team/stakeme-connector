@@ -14,11 +14,6 @@ class NibiruNode {
 
     install() {
         this.nodeInstaller.run(`source $HOME/.bash_profile && STAKEME_MONIKER=${this.moniker} bash ${appRoot}/scripts/nibiru-installer.sh`);
-        // console.log('[Core]',
-        //     shell.exec(`source $HOME/.bash_profile && STAKEME_MONIKER=${this.moniker} bash ${appRoot}/scripts/nibiru-installer.sh`,
-        //         {silent: true, shell: '/bin/bash'}
-        //     ).stdout.trim()
-        // );
         return "Install service go..";
     }
 

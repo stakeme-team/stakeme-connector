@@ -7,15 +7,15 @@ function NodeInstaller() {
         status = 'processing';
         child = exec(command, {async : true, shell: '/bin/bash'});
         child.stdout.on('data', function(data) {
-            if (logs.length === 6) {
-                logs = logs.splice(3, data.length);
+            if (logs.length === 4) {
+                logs = logs.splice(2, data.length);
                 return;
             }
             logs.push(data);
         });
         child.stderr.on('data', (data) => {
-            if (logs.length === 6) {
-                logs = logs.splice(3, data.length);
+            if (logs.length === 4) {
+                logs = logs.splice(2, data.length);
                 return;
             }
             logs.push(data);

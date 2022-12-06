@@ -87,7 +87,7 @@ class GitopiaNode {
     }
 
     async install() {
-        this.nodeInstaller.run('source $HOME/.bash_profile && STAKEME_MONIKER=${this.moniker} bash ${appRoot}/scripts/gitopia-installer.sh');
+        this.nodeInstaller.run(`source $HOME/.bash_profile && STAKEME_MONIKER=${this.moniker} bash ${appRoot}/scripts/gitopia-installer.sh`);
         return "Install service go..";
     }
 

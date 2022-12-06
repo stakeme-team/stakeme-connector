@@ -91,6 +91,14 @@ class GitopiaNode {
         return "Install service go..";
     }
 
+    getStatusInstall() {
+        return this.nodeInstaller.getStatus();
+    }
+
+    getInstallLogs() {
+        return this.nodeInstaller.getLogs();
+    }
+
     async restart() {
         console.log('[Core]',
             shell.exec('source $HOME/.bash_profile && sudo systemctl restart gitopiad', {silent: true, shell: '/bin/bash'}).stdout.trim()

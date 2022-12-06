@@ -12,19 +12,17 @@ function NodeManager() {
         config.security.STAKEME_WALLET,
         config.security.STAKEME_PASSWORD,
     );
+    const celestiaNode = new CelestiaNode(
+        config.security.STAKEME_MONIKER,
+        config.security.STAKEME_WALLET,
+        config.security.STAKEME_PASSWORD,
+    )
+    const gitopiaNode = new GitopiaNode()
     function getNode(nameProject) {
         const projects = {
-            'celestia': new CelestiaNode(
-                config.security.STAKEME_MONIKER,
-                config.security.STAKEME_WALLET,
-                config.security.STAKEME_PASSWORD,
-            ),
+            'celestia': celestiaNode,
             'nibiru': nibiruNode,
-            'gitopia': new GitopiaNode(
-                config.security.STAKEME_MONIKER,
-                config.security.STAKEME_WALLET,
-                config.security.STAKEME_PASSWORD,
-            )
+            'gitopia': gitopiaNode
         }
         return projects[nameProject];
     }

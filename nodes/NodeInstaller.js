@@ -8,14 +8,14 @@ function NodeInstaller() {
         child = exec(command, {async : true, shell: '/bin/bash'});
         child.stdout.on('data', function(data) {
             if (logs.length === 4) {
-                logs = logs.splice(2, data.length);
+                logs = logs.splice(2, 4);
                 return;
             }
             logs.push(data);
         });
         child.stderr.on('data', (data) => {
             if (logs.length === 4) {
-                logs = logs.splice(2, data.length);
+                logs = logs.splice(2, 4);
                 return;
             }
             logs.push(data);

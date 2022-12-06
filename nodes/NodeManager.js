@@ -7,6 +7,11 @@ const configRawData = fs.readFileSync('config.json');
 const config = JSON.parse(configRawData);
 
 function NodeManager() {
+    const nibiruNode = new NibiruNode(
+        config.security.STAKEME_MONIKER,
+        config.security.STAKEME_WALLET,
+        config.security.STAKEME_PASSWORD,
+    );
     function getNode(nameProject) {
         const projects = {
             'celestia': new CelestiaNode(
@@ -14,11 +19,7 @@ function NodeManager() {
                 config.security.STAKEME_WALLET,
                 config.security.STAKEME_PASSWORD,
             ),
-            'nibiru': new NibiruNode(
-                config.security.STAKEME_MONIKER,
-                config.security.STAKEME_WALLET,
-                config.security.STAKEME_PASSWORD,
-            ),
+            'nibiru': nibiruNode,
             'gitopia': new GitopiaNode(
                 config.security.STAKEME_MONIKER,
                 config.security.STAKEME_WALLET,

@@ -27,6 +27,7 @@ function NodeInstaller() {
 
         child.on('close', (code) => {
             status = 'end';
+            logs = [];
         });
     }
     function getLogs() {

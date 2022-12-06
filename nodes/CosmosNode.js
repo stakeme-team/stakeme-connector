@@ -56,23 +56,18 @@ class CosmosNode {
     }
 
     restart() {
-        console.log('[Core]',
-            shell.exec(`source $HOME/.bash_profile && sudo systemctl restart ${this.binaryCmd}`, {silent: true, shell: '/bin/bash'}).stdout.trim()
-        );
+        shell.exec(`source $HOME/.bash_profile && sudo systemctl restart ${this.binaryCmd}`, {silent: true, shell: '/bin/bash'}).stdout.trim()
         return "Node has been restarted";
     }
 
     stop() {
-        console.log('[Core]',
-            shell.exec(`source $HOME/.bash_profile && sudo systemctl stop ${this.binaryCmd}`, {silent: true, shell: '/bin/bash'}).stdout.trim()
-        );
+        shell.exec(`source $HOME/.bash_profile && sudo systemctl stop ${this.binaryCmd}`, {silent: true, shell: '/bin/bash'}).stdout.trim()
         return "Node has been stopped";
     }
 
     status() {
         try {
             const status = shell.exec(`source $HOME/.bash_profile && ${this.binaryCmd} status`, {silent: true, shell: '/bin/bash'});
-            console.log(status);
             return JSON.parse(status.stdout.trim() + status.stderr.trim());
         } catch (e) {
             console.log(e);

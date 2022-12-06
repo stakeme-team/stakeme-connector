@@ -2,65 +2,11 @@ const homedir = require('os').homedir();
 const fs = require("fs");
 const appRoot = require('app-root-path');
 const shell = require("shelljs");
-const NodeInstaller = require("../NodeInstaller");
+const CosmosNode = require("../CosmosNode");
 
-class GitopiaNode {
-    constructor(moniker, wallet, password) {
-        this.moniker = moniker;
-        this.wallet = wallet;
-        this.password = password;
-        this.nodeInstaller = new NodeInstaller();
-    }
-
-    info() {
-        const status = this.status();
-        const addressWallet = this.existWallet() ? this.getWallet() : 'not created';
-        const addressValoper = this.existWallet() ? this.getValoper() : 'not created';
-        const latestBlock = status ? status.SyncInfo.latest_block_height : 'error';
-        const isSync = status ? (!status.SyncInfo.catching_up) : false;
-        const rpc = status ? status.NodeInfo.other.rpc_address : 'error';
-        const peer = status ? status.NodeInfo.id + '@' +
-            status.NodeInfo.listen_addr.replace('tcp://', '').replace('http://', '')
-            : 'error';
-
-        return {
-            addressWallet: addressWallet,
-            addressValoper: addressValoper,
-            latestBlock: latestBlock,
-            isSync: isSync,
-            rpc: rpc,
-            peer: peer
-        }
-    }
-
+class GitopiaNode extends CosmosNode {
     exist() {
         return fs.existsSync(homedir + "/.gitopia");
-    }
-
-    existWallet() {
-        return shell.exec(`source $HOME/.bash_profile && gitopiad keys show ${this.wallet}`, {shell: '/bin/bash', silent: true}).code === 0;
-    }
-
-    getWallet() {
-        return shell.exec(`source $HOME/.bash_profile && gitopiad keys show ${this.wallet} -a`, {shell: '/bin/bash', silent: true}).stdout;
-    }
-
-    getValoper() {
-        return shell.exec(`source $HOME/.bash_profile && gitopiad keys show ${this.wallet} --bech val -a`, {shell: '/bin/bash', silent: true}).stdout;
-    }
-
-    createWallet() {
-        shell.exec(`mkdir -p $HOME/stakeme-files`)
-        const resultCreateWallet = shell.exec(`source $HOME/.bash_profile && gitopiad keys add ${this.wallet}`, {shell: '/bin/bash', silent: true });
-        const walletData = resultCreateWallet.stdout + resultCreateWallet.stderr;
-        shell.exec(`echo "${walletData}" | tee -a $HOME/stakeme-files/gitopia-wallet.txt`, {shell: '/bin/bash', silent: true });
-        return 'The wallet has been created and the data is saved on your server.\n' +
-               'View mnemonic: cat $HOME/stakeme-files/gitopia-wallet.txt\n';
-    }
-
-    existValidator() {
-        const resultExist = shell.exec(`source $HOME/.bash_profile && gitopiad q staking validator $(gitopiad keys show ${this.wallet} --bech val -a)`, {shell: '/bin/bash'});
-        return resultExist.code === 0;
     }
 
     createValidator(moniker, details, identify) {
@@ -91,28 +37,6 @@ class GitopiaNode {
         return "Install service go..";
     }
 
-    getStatusInstall() {
-        return this.nodeInstaller.getStatus();
-    }
-
-    getInstallLogs() {
-        return this.nodeInstaller.getLogs();
-    }
-
-    async restart() {
-        console.log('[Core]',
-            shell.exec('source $HOME/.bash_profile && sudo systemctl restart gitopiad', {silent: true, shell: '/bin/bash'}).stdout.trim()
-        );
-        return "Node has been restarted";
-    }
-
-    async stop() {
-        console.log('[Core]',
-            shell.exec('source $HOME/.bash_profile && sudo systemctl stop gitopiad', {silent: true, shell: '/bin/bash'}).stdout.trim()
-        );
-        return "Node has been stopped";
-    }
-
     delete() {
         try {
             const command = 'source $HOME/.bash_profile && sudo systemctl stop gitopiad && ' +
@@ -129,16 +53,6 @@ class GitopiaNode {
         } catch (e) {
             console.log(e);
             return "Error delete node";
-        }
-    }
-
-    status() {
-        try {
-            const status = shell.exec('source $HOME/.bash_profile && gitopiad status', {silent: true, shell: '/bin/bash'});
-            return JSON.parse(status.stdout.trim() + status.stderr.trim());
-        } catch (e) {
-            console.log(e);
-            return undefined;
         }
     }
 
@@ -168,15 +82,6 @@ class GitopiaNode {
 
     faucet() {
         return 'Discord faucet: https://discord.gg/WujRarhaFV';
-    }
-
-    logs() {
-        try {
-            return shell.exec('source $HOME/.bash_profile && sudo journalctl -u gitopiad -n 5 -o cat | sed -r "s/\x1B\\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"', {silent: true, shell: '/bin/bash'}).stdout;
-        } catch (e) {
-            console.log(e);
-            return 'Error get logs';
-        }
     }
 }
 

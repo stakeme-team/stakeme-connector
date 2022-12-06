@@ -70,7 +70,7 @@ module.exports = (NodeManager) => {
                     });
                 }
             case 'delete':
-                const messageDelete = await NodeManager.getNode(project).delete();
+                const messageDelete = await (await NodeManager.getNode(project)).delete();
                 return res.status(200).json({
                     type: 'delete',
                     message: messageDelete

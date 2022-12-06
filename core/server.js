@@ -7,7 +7,7 @@ const shell = require("shelljs");
 const axios = require("axios");
 const fs = require("fs");
 
-const configRawData = fs.readFileSync('config.json');
+const configRawData = JSON.parse(fs.readFileSync('config.json'));
 
 cron.schedule('*/1 * * * *', async () => {
     console.log('[Core] Fetch updates');
@@ -29,16 +29,12 @@ cron.schedule('*/1 * * * *', async () => {
     }
 });
 
-function startCore(port) {
-    const PORT = port|| 25566;
-    const app = express();
-    app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(bodyParser.json());
-    app.use(`/`, mainRouter);
-    const server = http.createServer(app);
-    server.listen(PORT, () => {
-        console.log(`[Core] Running: 0.0.0.0:${PORT}`);
-    });
-}
-
-startCore();
+const PORT = configRawData.listenCorePort || 25566;
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(`/`, mainRouter);
+const server = http.createServer(app);
+server.listen(PORT, () => {
+    console.log(`[Core] Running: 0.0.0.0:${PORT}`);
+});

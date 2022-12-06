@@ -32,7 +32,7 @@ class GitopiaNode extends CosmosNode {
         return (resultCreate.stdout + resultCreate.stderr);
     }
 
-    async install() {
+    install() {
         this.nodeInstaller.run(`source $HOME/.bash_profile && STAKEME_MONIKER=${this.moniker} bash ${appRoot}/scripts/gitopia-installer.sh`);
         return "Install service go..";
     }
@@ -81,7 +81,7 @@ class GitopiaNode extends CosmosNode {
     }
 
     faucet() {
-        return 'Discord faucet: https://discord.gg/WujRarhaFV';
+        return 'Discord faucet: https://discord.gg/WanKwMZE';
     }
 }
 

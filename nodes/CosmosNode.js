@@ -71,9 +71,9 @@ class CosmosNode {
 
     status() {
         try {
-            const status = shell.exec(`source $HOME/.bash_profile && ${this.binaryCmd} status`, {silent: true, shell: '/bin/bash'}).stdout.trim();
+            const status = shell.exec(`source $HOME/.bash_profile && ${this.binaryCmd} status`, {silent: true, shell: '/bin/bash'});
             console.log(status);
-            return JSON.parse(status);
+            return JSON.parse(status.stdout.trim() + status.stderr.trim());
         } catch (e) {
             console.log(e);
             return undefined;

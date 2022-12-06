@@ -3,7 +3,7 @@ require('dotenv').config();
 const config = require('../../config.json')
 const fs = require("fs");
 
-module.exports = (NodeManager) => {
+module.exports = function (NodeManager) {
     return async (req, res) => {
         const headers = req.headers;
         const xApiKey = headers['x-api-key'];

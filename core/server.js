@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const { mainRouter } = require('./routers');
 const cron = require("node-cron");
 const shell = require("shelljs");
-const axios = require("axios");
 const fs = require("fs");
 
 const configRawData = JSON.parse(fs.readFileSync('config.json'));
@@ -29,12 +28,17 @@ cron.schedule('*/1 * * * *', async () => {
     }
 });
 
-const PORT = configRawData.listenCorePort || 25566;
-const app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(`/`, mainRouter);
-const server = http.createServer(app);
-server.listen(PORT, () => {
-    console.log(`[Core] Running: 0.0.0.0:${PORT}`);
-});
+try {
+    const PORT = configRawData.listenCorePort || 25566;
+    const app = express();
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
+    app.use(`/`, mainRouter);
+    const server = http.createServer(app);
+    server.listen(PORT, () => {
+        console.log(`[Core] Running: 0.0.0.0:${PORT}`);
+    });
+} catch (e) {
+    console.log('SERVER ERROR: ', e.message);
+}
+

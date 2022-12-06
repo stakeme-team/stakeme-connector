@@ -23,11 +23,11 @@ class NibiruNode {
     }
 
     getStatusInstall() {
-        return NodeInstaller.getStatus();
+        return this.nodeInstaller.getStatus();
     }
 
     getInstallLogs() {
-        return NodeInstaller.getLogs();
+        return this.nodeInstaller.getLogs();
     }
 
     info() {

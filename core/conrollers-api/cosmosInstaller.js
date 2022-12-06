@@ -4,7 +4,7 @@ const config = require('../../config.json')
 const fs = require("fs");
 const shell = require("shelljs");
 
-module.exports = function (NodeManager) {
+module.exports = (NodeManager) => {
     return async (req, res) => {
         const headers = req.headers;
         const xApiKey = headers['x-api-key'];

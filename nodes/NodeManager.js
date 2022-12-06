@@ -11,17 +11,17 @@ function getNode(nameProject) {
         'celestia': new CelestiaNode(
             config.security.STAKEME_MONIKER,
             config.security.STAKEME_WALLET,
-            config.security.STAKEME_PASSWORD
+            config.security.STAKEME_PASSWORD,
         ),
         'nibiru': new NibiruNode(
             config.security.STAKEME_MONIKER,
             config.security.STAKEME_WALLET,
-            config.security.STAKEME_PASSWORD
+            config.security.STAKEME_PASSWORD,
         ),
         'gitopia': new GitopiaNode(
             config.security.STAKEME_MONIKER,
             config.security.STAKEME_WALLET,
-            config.security.STAKEME_PASSWORD
+            config.security.STAKEME_PASSWORD,
         )
     }
     return projects[nameProject];

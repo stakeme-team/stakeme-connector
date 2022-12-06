@@ -15,18 +15,16 @@ module.exports = (NodeManager) => {
             });
         }
         const query = req.body;
-
         const project = query.project;
-        const script = query.script;
 
-        const result = await shell.exec(`source $HOME/.bash_profile && bash $HOME/stakeme-connector/scripts/${script}`, {
-            shell: '/bin/bash',
-            silent: true
-        });
-        console.log(result.stdout + result.stderr);
+        const node = NodeManager.getNode(project);
+        const data = {
+            'statusInstaller': node.getStatusInstall(),
+            'logs': node
+        }
         return res.status(200).json({
-            message: `Code execute: ${result.code}`,
-            status: result.code
+            message: JSON.stringify(data, null, 2),
+            status: 0
         });
     };
 }

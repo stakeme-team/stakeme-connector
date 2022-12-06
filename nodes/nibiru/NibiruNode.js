@@ -2,12 +2,32 @@ const homedir = require('os').homedir();
 const fs = require("fs");
 const appRoot = require('app-root-path');
 const shell = require("shelljs");
+const NodeInstaller = require("../NodeInstaller")
 
 class NibiruNode {
     constructor(moniker, wallet, password) {
         this.moniker = moniker;
         this.wallet = wallet;
         this.password = password;
+        this.nodeInstaller = new NodeInstaller();
+    }
+
+    async install() {
+        this.nodeInstaller.run(`source $HOME/.bash_profile && STAKEME_MONIKER=${this.moniker} bash ${appRoot}/scripts/nibiru-installer.sh`);
+        // console.log('[Core]',
+        //     shell.exec(`source $HOME/.bash_profile && STAKEME_MONIKER=${this.moniker} bash ${appRoot}/scripts/nibiru-installer.sh`,
+        //         {silent: true, shell: '/bin/bash'}
+        //     ).stdout.trim()
+        // );
+        return "Install service go..";
+    }
+
+    getStatusInstall() {
+        return NodeInstaller.getStatus();
+    }
+
+    getInstallLogs() {
+        return NodeInstaller.getLogs();
     }
 
     info() {
@@ -83,15 +103,6 @@ class NibiruNode {
         command += '-y'
         const resultCreate = shell.exec(command, {shell: '/bin/bash'});
         return (resultCreate.stdout + resultCreate.stderr);
-    }
-
-    async install() {
-        console.log('[Core]',
-            shell.exec(`source $HOME/.bash_profile && STAKEME_MONIKER=${this.moniker} bash ${appRoot}/scripts/nibiru-installer.sh`,
-                {silent: true, shell: '/bin/bash'}
-            ).stdout.trim()
-        );
-        return "Node has been installed.";
     }
 
     async restart() {

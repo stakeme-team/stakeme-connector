@@ -12,7 +12,7 @@ class NibiruNode {
         this.nodeInstaller = new NodeInstaller();
     }
 
-    async install() {
+    install() {
         this.nodeInstaller.run(`source $HOME/.bash_profile && STAKEME_MONIKER=${this.moniker} bash ${appRoot}/scripts/nibiru-installer.sh`);
         // console.log('[Core]',
         //     shell.exec(`source $HOME/.bash_profile && STAKEME_MONIKER=${this.moniker} bash ${appRoot}/scripts/nibiru-installer.sh`,

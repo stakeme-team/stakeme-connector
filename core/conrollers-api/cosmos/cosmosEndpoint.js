@@ -13,11 +13,10 @@ module.exports = (NodeManager) => {
                 message: "Don't access"
             });
         }
-
-        const query = req.body;
-        const type = query.type;
-        const project = query.project;
         try {
+            const query = req.body;
+            const type = query.type;
+            const project = query.project;
             switch (type) {
                 case 'info':
                     const message = JSON.stringify(NodeManager.getNode(project).info());

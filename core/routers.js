@@ -5,7 +5,7 @@ const NodeManager = require('../nodes/NodeManager')
 const mainRouter = new express.Router();
 const nodeManager = NodeManager();
 mainRouter.post('/cosmos', api.cosmosEndpoint(nodeManager));
-mainRouter.get('/cosmos/node/info', api.cosmosEndpoint(nodeManager));
+mainRouter.get('/cosmos/node/info', api.nodeInfo(nodeManager));
 mainRouter.post('/cosmos/update', api.cosmosUpdate(nodeManager));
 mainRouter.post('/cosmos/installer', api.cosmosInstaller(nodeManager));
 

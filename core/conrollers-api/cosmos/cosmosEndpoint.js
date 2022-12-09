@@ -13,10 +13,10 @@ module.exports = (NodeManager) => {
                 message: "Don't access"
             });
         }
+        const query = req.body;
+        const type = query.type;
+        const project = query.project;
         try {
-            const query = req.body;
-            const type = query.type;
-            const project = query.project;
             switch (type) {
                 case 'info':
                     const message = JSON.stringify(NodeManager.getNode(project).info());
@@ -139,6 +139,10 @@ module.exports = (NodeManager) => {
                     return res.status(200).json({
                         type: 'setUser',
                         message: 'success'
+                    });
+                default:
+                    return res.status(400).json({
+                        message: "Please set type"
                     });
             }
         } catch (e) {

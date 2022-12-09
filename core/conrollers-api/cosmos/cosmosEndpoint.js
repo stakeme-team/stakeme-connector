@@ -19,6 +19,12 @@ module.exports = (NodeManager) => {
         const project = query.project;
 
         switch (type) {
+            case 'info':
+                const message = JSON.stringify(NodeManager.getNode(project).info());
+                return res.status(200).json({
+                    type: 'info',
+                    message: message
+                });
             case 'install':
                 try {
                     const message = NodeManager.getNode(project).install();

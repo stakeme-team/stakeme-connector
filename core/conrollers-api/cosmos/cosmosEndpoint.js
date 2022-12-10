@@ -17,29 +17,29 @@ module.exports = (NodeManager) => {
         const type = query.type;
         const project = query.project;
         try {
+            const node = NodeManager.getNode(project);
             switch (type) {
                 case 'info':
-                    const message = JSON.stringify(NodeManager.getNode(project).info());
-                    return res.status(200).json({
-                        type: 'info',
-                        message: message
-                    });
-                case 'install':
                     try {
-                        const message = NodeManager.getNode(project).install();
+                        const startDate = new Date();
+                        const info = node.info();
+                        const endDate = new Date();
+                        console.log('🟠 Debug timeout info:', endDate - startDate);
+                        const message = JSON.stringify(info);
                         return res.status(200).json({
-                            type: 'install',
+                            type: 'info',
                             message: message
                         });
                     } catch (e) {
+                        console.log('Error', e.message)
                         return res.status(400).json({
-                            type: 'install',
-                            message: 'Error install node'
+                            type: 'info',
+                            message: e.message
                         });
                     }
                 case 'restart':
                     try {
-                        const message = NodeManager.getNode(project).restart();
+                        const message = node.restart();
                         return res.status(200).json({
                             type: 'restart',
                             message: message
@@ -53,11 +53,11 @@ module.exports = (NodeManager) => {
                 case 'logs':
                     return res.status(200).json({
                         type: 'logs',
-                        message: NodeManager.getNode(project).logs()
+                        message: node.logs()
                     });
                 case 'stop':
                     try {
-                        const message = NodeManager.getNode(project).stop();
+                        const message = node.stop();
                         return res.status(200).json({
                             type: 'stop',
                             message: message
@@ -69,7 +69,7 @@ module.exports = (NodeManager) => {
                         });
                     }
                 case 'delete':
-                    const messageDelete = NodeManager.getNode(project).delete();
+                    const messageDelete = node.delete();
                     return res.status(200).json({
                         type: 'delete',
                         message: messageDelete
@@ -77,7 +77,7 @@ module.exports = (NodeManager) => {
                 case 'exist':
                     return res.status(200).json({
                         type: 'exist',
-                        message: NodeManager.getNode(project).exist()
+                        message: node.exist()
                     });
                 case 'wallet':
                     const argument = query.argument;
@@ -86,19 +86,19 @@ module.exports = (NodeManager) => {
                             return res.status(200).json({
                                 type: 'wallet',
                                 argument: argument,
-                                message: NodeManager.getNode(project).existWallet()
+                                message: node.existWallet()
                             });
                         case 'create':
                             return res.status(200).json({
                                 type: 'wallet',
                                 argument: argument,
-                                message: NodeManager.getNode(project).createWallet()
+                                message: node.createWallet()
                             });
                         case 'existValidator':
                             return res.status(200).json({
                                 type: 'wallet',
                                 argument: argument,
-                                message: NodeManager.getNode(project).existValidator()
+                                message: node.existValidator()
                             });
                         case 'createValidator':
                             const moniker = query.moniker;
@@ -107,39 +107,30 @@ module.exports = (NodeManager) => {
                             return res.status(200).json({
                                 type: 'wallet',
                                 argument: argument,
-                                message: NodeManager.getNode(project).createValidator(moniker, details, identify)
+                                message: node.createValidator(moniker, details, identify)
                             });
                         case 'sendTokens':
                             const toWallet = query.toWallet;
                             return res.status(200).json({
                                 type: 'wallet',
                                 argument: argument,
-                                message: NodeManager.getNode(project).sendTokens(toWallet, query.amount)
+                                message: node.sendTokens(toWallet, query.amount)
                             });
                         case 'delegateTokens':
                             const toValoper = query.toValoper;
                             return res.status(200).json({
                                 type: 'wallet',
                                 argument: argument,
-                                message: NodeManager.getNode(project).delegateTokens(toValoper, query.amount)
+                                message: node.delegateTokens(toValoper, query.amount)
                             });
                         case 'faucet':
                             return res.status(200).json({
                                 type: 'wallet',
                                 argument: argument,
-                                message: NodeManager.getNode(project).faucet()
+                                message: node.faucet()
                             });
                     }
                     break;
-                case 'setUser':
-                    const telegramUserId = query.telegramUserId
-                    config['telegramUserId'] = telegramUserId;
-                    const data = JSON.stringify(config, null, 2);
-                    fs.writeFileSync('config.json', data);
-                    return res.status(200).json({
-                        type: 'setUser',
-                        message: 'success'
-                    });
                 default:
                     return res.status(400).json({
                         message: "Please set type"

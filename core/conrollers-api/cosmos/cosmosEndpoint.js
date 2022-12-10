@@ -24,7 +24,7 @@ module.exports = (NodeManager) => {
                         const startDate = new Date();
                         const info = node.info();
                         const endDate = new Date();
-                        console.log('🟠 Debug timeout info:', startDate - endDate);
+                        console.log('🟠 Debug timeout info:', endDate - startDate);
                         const message = JSON.stringify(info);
                         return res.status(200).json({
                             type: 'info',

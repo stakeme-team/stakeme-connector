@@ -28,7 +28,9 @@ $TOKEN init $STAKEME_MONIKER --chain-id $CHAIN_ID
 $TOKEN config chain-id $CHAIN_ID
 
 printLog "Download genesis and setup config"
-wget -O $HOME/.gitopia/config/addrbook.json "https://gist.githubusercontent.com/stakemepro/b7ed040eeaed546219a1ce4061a479ce/raw/d9615100dd623d5a973de62f0e2476856bd2e6bf/addrbook.json"
+ADDRBOOK_NAME=$(curl -s http://gitopia.stakeme.pro:8080/public/ | egrep -o ">gitopia_addrbook.*\.json" | tr -d ">")
+curl -s http://gitopia.stakeme.pro:8080/$ADDRBOOK_NAME > $HOME/.gitopia/config/addrbook.json
+
 wget -q https://server.gitopia.com/raw/gitopia/testnets/master/gitopia-janus-testnet-2/genesis.json.gz
 gunzip genesis.json.gz
 mv genesis.json $HOME/.gitopia/config/genesis.json
@@ -61,18 +63,15 @@ EOF
 gitopiad tendermint unsafe-reset-all --home $HOME/.gitopiad --keep-addr-book
 node $HOME/stakeme-connector/nodes/gitopia/set-ports-node.js gitopiad .gitopia
 
-#SNAP_RPC=http://gitopia.stakeme.pro:27657
-#
-#LATEST_HEIGHT=$(curl -s $SNAP_RPC/block | jq -r .result.block.header.height); \
-#BLOCK_HEIGHT=$((LATEST_HEIGHT - 1000)); \
-#TRUST_HASH=$(curl -s "$SNAP_RPC/block?height=$BLOCK_HEIGHT" | jq -r .result.block_id.hash)
-#
-#echo $LATEST_HEIGHT $BLOCK_HEIGHT $TRUST_HASH
-#
-#sed -i.bak -E "s|^(enable[[:space:]]+=[[:space:]]+).*$|\1true| ; \
-#s|^(rpc_servers[[:space:]]+=[[:space:]]+).*$|\1\"$SNAP_RPC,$SNAP_RPC\"| ; \
-#s|^(trust_height[[:space:]]+=[[:space:]]+).*$|\1$BLOCK_HEIGHT| ; \
-#s|^(trust_hash[[:space:]]+=[[:space:]]+).*$|\1\"$TRUST_HASH\"| ; \
-#s|^(seeds[[:space:]]+=[[:space:]]+).*$|\1\"\"|" $HOME/.gitopia/config/config.toml
+printLog "Prepare and install snapshot (may take a long time)"
 
+cp $HOME/.gitopia/data/priv_validator_state.json $HOME/.gitopia/priv_validator_state.json.backup
+gitopiad tendermint unsafe-reset-all --home $HOME/.gitopia --keep-addr-book
+rm -rf $HOME/.gitopia/data
+
+SNAPSHOT_NAME=$(curl -s http://gitopia.stakeme.pro:8080/public/ | egrep -o ">gitopia_snapshot.*\.tar.lz4" | tr -d ">")
+echo "Snapshot $SNAPSHOT_FILE downloading.."
+curl -s http://gitopia.stakeme.pro:8080/public/$SNAPSHOT_NAME | lz4 -dc - | tar -xf - -C $HOME/.gitopia
+
+mv $HOME/.gitopia/priv_validator_state.json.backup $HOME/.gitopia/data/priv_validator_state.json
 sudo systemctl restart gitopiad

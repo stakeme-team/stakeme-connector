@@ -33,7 +33,7 @@ curl -s https://rpc.testnet-1.nibiru.fi/genesis | jq -r .result.genesis > $HOME/
 sha256sum $HOME/.nibid/config/genesis.json # b58b61beb34f0d9e45ec2f1449f6600acef428b401976dc90edb9d586a412ed2
 
 ADDRBOOK_NAME=$(curl -s http://nibiru.stakeme.pro:8080/public/ | egrep -o ">nibiru_addrbook.*\.json" | tr -d ">")
-curl -s http://nibiru.stakeme.pro:8080/$ADDRBOOK_NAME > $HOME/.nibid/config/addrbook.json
+curl -s http://nibiru.stakeme.pro:8080/public/$ADDRBOOK_NAME > $HOME/.nibid/config/addrbook.json
 
 sed -i 's|^minimum-gas-prices *=.*|minimum-gas-prices = "0.0001unibi"|g' $HOME/.nibid/config/app.toml
 seeds="ae357e14309640ca33cde597b37f0a91e63a32bd@nibiru.stakeme.pro:36656"

@@ -36,8 +36,8 @@ ADDRBOOK_NAME=$(curl -s http://nibiru.stakeme.pro:8080/public/ | egrep -o ">nibi
 curl -s http://nibiru.stakeme.pro:8080/public/$ADDRBOOK_NAME > $HOME/.nibid/config/addrbook.json
 
 sed -i 's|^minimum-gas-prices *=.*|minimum-gas-prices = "0.0001unibi"|g' $HOME/.nibid/config/app.toml
-seeds="ae357e14309640ca33cde597b37f0a91e63a32bd@nibiru.stakeme.pro:36656"
-peers="ae357e14309640ca33cde597b37f0a91e63a32bd@nibiru.stakeme.pro:36656"
+seeds="7f30e0e50fa219fad61b1378592285f6ee2b70dc@nibiru.stakeme.pro:36656"
+peers="7f30e0e50fa219fad61b1378592285f6ee2b70dc@nibiru.stakeme.pro:36656"
 sed -i -e 's|^seeds *=.*|seeds = "'$seeds'"|; s|^persistent_peers *=.*|persistent_peers = "'$peers'"|' $HOME/.nibid/config/config.toml
 
 printLog "Setup pruning and other settings"

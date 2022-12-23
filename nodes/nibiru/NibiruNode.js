@@ -14,7 +14,7 @@ class NibiruNode extends CosmosNode {
         let command = 'source $HOME/.bash_profile && nibid tx staking create-validator ' +
         '--amount=1000000unibi ' +
         '--pubkey=$(nibid tendermint show-validator) ' +
-        '--chain-id=nibiru-testnet-1 ' +
+        '--chain-id=nibiru-testnet-2 ' +
         '--commission-rate=0.10 ' +
         '--commission-max-rate=0.20 ' +
         '--commission-max-change-rate=0.01 ' +
@@ -55,7 +55,7 @@ class NibiruNode extends CosmosNode {
     }
 
     sendTokens(toWallet, amount) {
-        const command = `source $HOME/.bash_profile && nibid tx bank send ${this.wallet} ${toWallet} ${amount}unibi --from ${this.wallet} --chain-id nibiru-testnet-1 --gas-prices 0.1unibi --gas-adjustment 1.5 --gas auto -y`;
+        const command = `source $HOME/.bash_profile && nibid tx bank send ${this.wallet} ${toWallet} ${amount}unibi --from ${this.wallet} --chain-id nibiru-testnet-2 --gas-prices 0.1unibi --gas-adjustment 1.5 --gas auto -y`;
         console.log('send', command);
         try {
             const result = shell.exec(command, {silent: true, shell: '/bin/bash'});
@@ -67,7 +67,7 @@ class NibiruNode extends CosmosNode {
     }
 
     delegateTokens(toValoper, amount) {
-        const command = `source $HOME/.bash_profile && nibid tx staking delegate ${toValoper} ${amount}unibi --from ${this.wallet} --chain-id nibiru-testnet-1 --gas-prices 0.1unibi --gas-adjustment 1.5 --gas auto -y `;
+        const command = `source $HOME/.bash_profile && nibid tx staking delegate ${toValoper} ${amount}unibi --from ${this.wallet} --chain-id nibiru-testnet-2 --gas-prices 0.1unibi --gas-adjustment 1.5 --gas auto -y `;
         console.log('delegate', command);
         try {
             const result = shell.exec(command, {silent: true, shell: '/bin/bash'});

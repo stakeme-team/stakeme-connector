@@ -60,6 +60,10 @@ LimitNOFILE=10000
 [Install]
 WantedBy=multi-user.target
 EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable nibid
+
 nibid tendermint unsafe-reset-all --home $HOME/.nibid --keep-addr-book
 
 SNAP_RPC="http://nibiru.stakeme.pro:36657"

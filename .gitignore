@@ -2,3 +2,5 @@ node_modules
 package-lock.json
 .idea
 config.json
+.DS_Store
+nodes/.DS_Store

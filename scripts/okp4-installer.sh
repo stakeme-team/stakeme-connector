@@ -63,8 +63,6 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable okp4d
 
-okp4d tendermint unsafe-reset-all --home $HOME/.okp4d --keep-addr-book
-
 cp $HOME/.okp4d/data/priv_validator_state.json $HOME/.okp4d/priv_validator_state.json.backup
 okp4d tendermint unsafe-reset-all --home $HOME/.okp4d --keep-addr-book
 rm -rf $HOME/.okp4d/data
